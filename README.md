@@ -86,10 +86,10 @@ It would produce a html page of your history like the following:
 - Run all the cells and enter mysql details where asked.
 
 - You'll find an interactive line graph of category vs. time on 11th cell. (Here category is type of video watched like entertainment, comedy, etc.) Here's an example:
-![line graph image](https://i.postimg.cc/C588jRMr/line-graph.png)
+![line graph image](https://i.ibb.co/xCFBHjq/plot-example.png)
 
 - You'll also find an interactive bar graph of video consumption by category at 17th cell. Here's an example:
-![bar graph image](https://i.postimg.cc/VLBrmQJt/bar-graph.png)
+![bar graph image](https://i.ibb.co/52cJX1C/bar-plot.png)
 
 - At last, you'll find an animated bar graph at 19th cell that shows category consumption over time. Here's an example:
 
