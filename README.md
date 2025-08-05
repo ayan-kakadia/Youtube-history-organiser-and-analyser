@@ -1,98 +1,96 @@
 # Youtube History Organiser and Analyser
 
-## This is a simple program to organise, sort and analyse your youtube history.
+A simple program to organise, sort, and analyse your YouTube watch history.
 
-### Guidelines to use:
-1. Download, install and setup mysql server.
+## Features
 
-2. Install all the dependencies from requirements.txt
+- Organise your YouTube watch history into a MySQL database.
+- Analyse viewing patterns with interactive visualisations:
+  - Line graph: category vs. time
+  - Bar graph: video consumption by category
+  - Animated bar graph: category consumption over time
+- Optional: Generate an HTML table of your watch history.
 
-3. Download your history from [google takeout](takeout.google.com) in **json format**.
+## Prerequisites
 
-4. Use yt_history_organiser program to sort and store your history in mysql database.
+- MySQL server installed and set up with user and password ([MySQL Download](https://www.mysql.com)).
+- Python installed with pip.
+- Jupyter notebook installed (for analysis).
 
-5. Use history analyser program to create interactive graphs of your history consumption.
+## Installation
 
-## Detailed explanation to use:
+1. Clone the repository:
+   ```
+   git clone https://github.com/ayank674/Youtube-history-organiser-and-analyser.git
+   ```
+   Or download the code from the [repository page](https://github.com/ayank674/Youtube-history-organiser-and-analyser).
 
-### Setup mysql server.
+2. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
 
-Download and install mysql from [here](www.mysql.com) and setup server with proper user and password.
+## Downloading YouTube History
 
-### Installing dependencies.
+1. Go to [takeout.google.com](https://takeout.google.com) with your Google account.
+2. Deselect all options and select "YouTube and YouTube Music".
+3. Click on "Multiple formats" and choose JSON for history.
+4. Proceed to create the export and download the file.
+5. Unzip the downloaded file to find `watch-history.json`.
 
-use the following command in terminal:
+## Organising History
 
-    pip install -r requirements.txt
+1. Run `yt-history-organiser.py`.
+2. Enter your MySQL server details when prompted.
+3. Choose option 1 to store new history or option 2 to extend previous history.
+4. Wait for the script to organise your history into the database.
 
-### downloading history from takeout.google.com
+## Analysing History
 
-- Open [google takeout](takeout.google.com) with your preferred google account on a browser.
+1. Open `history_analyser.ipynb` in a Jupyter notebook environment.
+2. Run all cells and enter MySQL details when asked.
+3. View interactive graphs:
+   - Line graph of category vs. time at cell 11.
+   - Bar graph of video consumption by category at cell 17.
+   - Animated bar graph of category consumption over time at cell 19.
 
-- Press on deselect all option in 'create a new takeout' menu.
+## Optional: Generating HTML Table
 
-- Navigate down to youtube and Youtube Music section and select it.
+You can generate an HTML table of your history using the [Python-html-table-writer](https://github.com/VengeanceOG/Python-html-table-writer) module.
 
-- Click on multiple formats button and select json in history.
-![json.png](https://i.postimg.cc/ZKDHPdLj/json.png)
+After setting up the database connection, add the following code at the end of `yt-history-organiser.py` or run it separately:
 
-- Click on next step and then press create export button.
+```python
+import html_table_writer
 
-- Wait till your history is being exported and then reload the page.
+cur.execute('select title,channel,category,time,date from video ORDER BY date DESC,time DESC')
+if total_rows <= 100:
+    history = cur.fetchall()
+else:
+    history = cur.fetchmany(100)
 
-- Go to manage exports and then download your exported history from it.
+html_table = html_table_writer.table('history.html', encoding='utf-8', border=2, headers=['Title', 'Channel', 'Category', 'Time', 'Date'])
+html_table.write_table(history)
 
-- unzip the exported history and you'll find watch-history.json in it.
-
-## Using yt-history-organiser.py
-
-- Run the program on your device and enter the mysql details.
-
-- If you want to store a new history, enter 1.
-
-- If you want to extend a previous history, enter 2.
-
-- Wait till your history is being organised.
-
-### Tip: You can display your history on a html page by using my [Python-html-table-writer](https://github.com/VengeanceOG/Python-html-table-writer). Just add this code at the end of program:
-
-    import html_table_writer
-
-    cur.execute('select title,channel,category,time,date from video ORDER BY date DESC,time DESC')
-    if total_rows<=100:
-        history = cur.fetchall()
-    else:
+if total_rows > 100:
+    while True:
         history = cur.fetchmany(100)
+        if history:
+            html_table.extend_table(history)
+        else:
+            break
+```
 
-    html_table = html_table_writer.table('history.html',encoding= 'utf-8',border=2,headers=['Title','Channel','Category','Time','Date'])
-    html_table.write_table(history)
+This will create `history.html` with your watch history.
 
-    if total_rows>100: #create html table of all the history by looping every 100 videos in database.
-        while True:
-            history = cur.fetchmany(100)
-            if history:
-                html_table.extend_table(history)
-            else:
-                break
+## Examples
 
-It would produce a html page of your history like the following:
+- Selecting JSON format in Google Takeout: ![JSON selection](https://i.postimg.cc/ZKDHPdLj/json.png)
+- HTML history page: ![HTML page](https://i.postimg.cc/3JpjGcdr/html-page.png)
+- Line graph example: ![Line graph](https://i.ibb.co/xCFBHjq/plot-example.png)
+- Bar graph example: ![Bar graph](https://i.ibb.co/52cJX1C/bar-plot.png)
+- Animated bar graph: [Watch video](https://github.com/VengeanceOG/Youtube-history-organiser-and-analyser/assets/107803735/eca8731a-edf8-4201-b54e-e30f990f4517)
 
-![html page image](https://i.postimg.cc/3JpjGcdr/html-page.png)
+## License
 
-## Using Data analyser program:
-
-- Run history_analyser.ipynb as a jupyter notebook.
-
-- Run all the cells and enter mysql details where asked.
-
-- You'll find an interactive line graph of category vs. time on 11th cell. (Here category is type of video watched like entertainment, comedy, etc.) Here's an example:
-![line graph image](https://i.ibb.co/xCFBHjq/plot-example.png)
-
-- You'll also find an interactive bar graph of video consumption by category at 17th cell. Here's an example:
-![bar graph image](https://i.ibb.co/52cJX1C/bar-plot.png)
-
-- At last, you'll find an animated bar graph at 19th cell that shows category consumption over time. Here's an example:
-
-
-https://github.com/VengeanceOG/Youtube-history-organiser-and-analyser/assets/107803735/eca8731a-edf8-4201-b54e-e30f990f4517
-
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/ayank674/Youtube-history-organiser-and-analyser/blob/main/LICENSE) file for details.
