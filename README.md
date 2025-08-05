@@ -20,13 +20,13 @@ A simple program to organise, sort, and analyse your YouTube watch history.
 ## Installation
 
 1. Clone the repository:
-   ```
+   ```bash
    git clone https://github.com/ayank674/Youtube-history-organiser-and-analyser.git
    ```
    Or download the code from the [repository page](https://github.com/ayank674/Youtube-history-organiser-and-analyser).
 
 2. Install dependencies:
-   ```
+   ```bash
    pip install -r requirements.txt
    ```
 
@@ -85,11 +85,32 @@ This will create `history.html` with your watch history.
 
 ## Examples
 
-- Selecting JSON format in Google Takeout: ![JSON selection](https://i.postimg.cc/ZKDHPdLj/json.png)
-- HTML history page: ![HTML page](https://i.postimg.cc/3JpjGcdr/html-page.png)
-- Line graph example: ![Line graph](https://i.ibb.co/xCFBHjq/plot-example.png)
-- Bar graph example: ![Bar graph](https://i.ibb.co/52cJX1C/bar-plot.png)
-- Animated bar graph: [Watch video](https://github.com/VengeanceOG/Youtube-history-organiser-and-analyser/assets/107803735/eca8731a-edf8-4201-b54e-e30f990f4517)
+<details>
+<summary><strong>Selecting JSON format in Google Takeout</strong></summary>
+<img src="https://i.postimg.cc/ZKDHPdLj/json.png" width="600"/>
+</details>
+
+<details>
+<summary><strong>HTML history page</strong></summary>
+<img src="https://i.postimg.cc/3JpjGcdr/html-page.png" width="600"/>
+</details>
+
+<details>
+<summary><strong>Line graph example</strong></summary>
+<img src="https://i.ibb.co/xCFBHjq/plot-example.png" width="600"/>
+</details>
+
+<details>
+<summary><strong>Bar graph example</strong></summary>
+<img src="https://i.ibb.co/52cJX1C/bar-plot.png" width="600"/>
+</details>
+
+<details>
+<summary><strong>Animated bar graph over time</strong></summary>
+
+[Click here to watch the animation](https://github.com/VengeanceOG/Youtube-history-organiser-and-analyser/assets/107803735/eca8731a-edf8-4201-b54e-e30f990f4517)
+
+</details>
 
 ## License
 
